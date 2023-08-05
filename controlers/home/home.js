@@ -6,5 +6,5 @@ export const home = async(req, res) => {
 
 export const signUp = async(req, res) => {
     const {name , email, password} = req.body;
-
 }
+
