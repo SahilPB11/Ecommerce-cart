@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import user from "../models/user.js";
+import user from "../../models/user.js";
 
 export const registeration = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -24,16 +24,16 @@ export const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   const User = await user.findOne({ email });
-  
+
   if (!User)
-  return res
-.status(400)
-.json({ message: "Please Enter valid eamil / regiisterd first" });
+    return res
+      .status(400)
+      .json({ message: "Please Enter valid eamil / regiisterd first" });
 
   const isIt = await bcrypt.compare(password, User.password);
 
   if (!isIt) return res(400).json({ message: "Please enter a valid password" });
-req.user = User;
+  req.user = User;
 
   next();
 };
