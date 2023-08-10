@@ -1,5 +1,6 @@
-import product from "../../models/product.js";
+import product from "../models/product-model.js";
 
+// getting all products
 export const getAllProducts = async (req, res) => {
   let items;
   try {
@@ -12,6 +13,7 @@ export const getAllProducts = async (req, res) => {
   res.status(200).json({ items });
 };
 
+// here we are making new product
 export const additems = async (req, res) => {
   const { imagePath, title, description, price } = req.body;
   let item;
@@ -25,6 +27,7 @@ export const additems = async (req, res) => {
   res.status(200).json({ item });
 };
 
+// access the product with the help of id
 export const getOne = async (req, res) => {
   let item;
   try {
@@ -35,18 +38,20 @@ export const getOne = async (req, res) => {
   if (!item) return res.status(400).json({ message: "list is empty properly" });
   res.status(200).json({ item });
 };
+
+// updating the product
 export const updateOne = async (req, res) => {
   const id = req.params.id;
   const update = req.body;
   try {
     const item = await product.findByIdAndUpdate(id, update, { new: true });
-
-    console.log(item);
     return res.status(200).json({ success: true, data: item });
   } catch (e) {
-    res.status(200).json({ success: false, message: err.message });
-  }
+    res.status(500).json({ success: false, message: err.message });
+  };
 };
+
+// here we are deleting the product
 export const deleteOne = async (req, res) => {
   let item;
   try {

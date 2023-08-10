@@ -14,6 +14,7 @@ export const signUpHome = async (req, res, next) => {
   }
 };
 
+// login and then start the sessin
 export const loginHome = async (req, res, next) => {
   const User = req.user;
   console.log(User);
@@ -24,6 +25,7 @@ export const loginHome = async (req, res, next) => {
   }
 };
 
+// here we are ending the sessionand logout
 export const logoutHome = async (req, res, next) => {
   try {
     deleteSession(req, res);

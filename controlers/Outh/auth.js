@@ -2,19 +2,19 @@ import jwt from "jsonwebtoken";
 import user from "../../models/user.js";
 
 export const isAuthenticated = async (req, res, next) => {
+  const { token } = req.cookies;
   try {
-    const { token } = req.coookies;
-    if (!token) {
+    if (!token)
       return res.status(404).json({
-        message: "please try to login",
-        cookie: "cookie is not valid",
+        success: false,
+        message: "Login First ",
       });
-    }
-    const decode = jwt.verify(token, process.env.Secret);
-    req.user = user.findById(decode._id);
+
+    const decodedData = await jwt.verify(token, process.env.Secret);
+    req.user = await user.findById(decodedData.id);
     next();
-  } catch (err) {
-    console.log(err);
+  } catch (e) {
+    console.log(e);
   }
 };
 
